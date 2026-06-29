@@ -1,0 +1,15 @@
+<html>
+  <head>
+    <%= render "layouts/shared/head" %>
+  </head>
+
+  <body>
+    <%= render "shared/header" %>
+    <div class="flex">
+      <%= render "shared/sidebar" %>
+      <main class="flex-1 p-6">
+        <%= yield %>
+      </main>
+    </div>
+  </body>
+</html>
