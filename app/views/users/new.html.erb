@@ -1,4 +1,25 @@
-<div>
-  <h1 class="font-bold text-4xl">Users#new</h1>
-  <p>Find me in app/views/users/new.html.erb</p>
-</div>
+<%= form_with model: @user do |f| %>
+  <div>
+    <%= f.label :username %>
+    <%= f.text_field :username %>
+  </div>
+
+  <div>
+    <%= f.label :email %>
+    <%= f.email_field :email %>
+  </div>
+
+  <div>
+    <%= f.label :password %>
+    <%= f.password_field :password %>
+  </div>
+
+  <div>
+    <%= f.label :password_confirmation %>
+    <%= f.password_field :password_confirmation %>
+  </div>
+
+  <div>
+    <%= f.submit "Sign up" %>
+  </div>
+<% end %>
