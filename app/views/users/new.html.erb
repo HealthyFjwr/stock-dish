@@ -1,25 +1,30 @@
-<%= form_with model: @user do |f| %>
-  <div>
-    <%= f.label :username %>
-    <%= f.text_field :username %>
-  </div>
+<div class="min-h-screen flex items-center justify-center bg-linear-to-br from-green-50 to-white px-4">
+  <div class="w-full max-w-md bg-white rounded-2xl shadow-sm border border-gray-300 p-8">
+    <div class="font-bold text-xl text-green-700 text-center mb-4">Stock<span class="text-green-500">Dish</span></div>
+    <div class="text-center text-xs font-bold uppercase tracking-widest text-green-700 mb-6">Sign Up</div>
 
-  <div>
-    <%= f.label :email %>
-    <%= f.email_field :email %>
-  </div>
+    <%= form_with model: @user do |f| %>
+      <div class="mb-4">
+        <%= f.label :username, class: "block text-sm font-medium text-gray-700 mb-1" %>
+        <%= f.text_field :username, class: "w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" %>
+      </div>
 
-  <div>
-    <%= f.label :password %>
-    <%= f.password_field :password %>
-  </div>
+      <div class="mb-4">
+        <%= f.label :email, class: "block text-sm font-medium text-gray-700 mb-1" %>
+        <%= f.email_field :email, class: "w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" %>
+      </div>
 
-  <div>
-    <%= f.label :password_confirmation %>
-    <%= f.password_field :password_confirmation %>
-  </div>
+      <div class="mb-4">
+        <%= f.label :password, class: "block text-sm font-medium text-gray-700 mb-1" %>
+        <%= f.password_field :password, class: "w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" %>
+      </div>
 
-  <div>
-    <%= f.submit "Sign up" %>
+      <div class="mb-6">
+        <%= f.label :password_confirmation, class: "block text-sm font-medium text-gray-700 mb-1" %>
+        <%= f.password_field :password_confirmation, class: "w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" %>
+      </div>
+
+      <%= f.submit t(".submit"), class: "w-full bg-green-700 text-white rounded-lg py-3 font-bold hover:bg-green-900 transition" %>
+    <% end %>
   </div>
-<% end %>
+</div>

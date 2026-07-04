@@ -7,3 +7,7 @@ ja:
         username: ユーザー名
         email: メールアドレス
         password: パスワード
+        password_confirmation: パスワード確認
+  users:
+    new:
+      submit: 登録する
