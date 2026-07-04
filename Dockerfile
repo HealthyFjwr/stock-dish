@@ -14,4 +14,4 @@ RUN bundle install
 COPY . .
 
 EXPOSE 3000
-CMD ["sh", "-c", "if [ \"$RAILS_ENV\" = \"production\" ]; then bundle exec rails assets:precompile; fi && rails server -b 0.0.0.0"]
+CMD ["sh", "-c", "if [ \"$RAILS_ENV\" = \"production\" ]; then bundle exec rails assets:precompile; fi && bundle exec rails db:migrate && rails server -b 0.0.0.0"]
