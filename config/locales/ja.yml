@@ -11,3 +11,8 @@ ja:
   users:
     new:
       submit: 登録する
+  sessions:
+    new:
+      email: メールアドレス
+      password: パスワード
+      submit: ログイン
