@@ -46,6 +46,19 @@ RSpec.describe User, type: :model do
         expect(user2).not_to be_valid
       end
     end
+    context "email に大文字が含まれる場合" do
+      it "小文字に変換されて保存される" do
+        user = create(:user, email: "TEST01@EXAMPLE.COM")
+        expect(user.email).to eq("test01@example.com")
+      end
+    end
+    context "email が大文字小文字違いで重複している場合" do
+      it "無効である" do
+        create(:user, email: "test01@example.com")
+        user2 = build(:user, username: "user02", email: "TEST01@EXAMPLE.COM")
+        expect(user2).not_to be_valid
+      end
+    end
     context "username が重複している場合" do
       it "無効である" do
         create(:user)
