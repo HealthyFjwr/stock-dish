@@ -9,7 +9,7 @@
     </button>
 
     <div data-dropdown-target="menu" class="hidden absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-md shadow-md z-10">
-      <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">設定</a>
+      <%= link_to "設定", edit_user_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" %>
       <%= link_to "ログアウト", logout_path, data: { turbo_method: :delete }, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" %>
     </div>
   </div>

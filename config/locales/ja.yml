@@ -11,6 +11,10 @@ ja:
   users:
     new:
       submit: 登録する
+    edit:
+      user_edit: ユーザーネーム編集
+      submit: 変更
+      cancel: キャンセル
   sessions:
     new:
       email: メールアドレス
