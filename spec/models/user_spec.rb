@@ -66,6 +66,24 @@ RSpec.describe User, type: :model do
         expect(user2).not_to be_valid
       end
     end
+    context "usernameが20文字の場合" do
+      it "有効であること" do
+        user = build(:user, username: "a" * 20)
+        expect(user).to be_valid
+      end
+    end
+    context "usernameが21文字の場合" do
+      it "無効であること" do
+        user = build(:user, username: "a" * 21)
+        expect(user).to be_invalid
+      end
+
+      it "エラーメッセージが含まれること" do
+        user = build(:user, username: "a" * 21)
+        user.valid?
+        expect(user.errors[:username]).to be_present
+      end
+    end
   end
 end
 
