@@ -43,6 +43,10 @@ RSpec.describe "Users", type: :request do
         user.reload
         expect(user.username).to eq("user11")
       end
+      it "flashのnoticeメッセージが画面に表示されること" do
+        follow_redirect!
+        expect(response.body).to include("ユーザー情報を更新しました")
+      end
     end
 
     context "usernameが21文字以上の場合" do
@@ -73,6 +77,15 @@ RSpec.describe "Users", type: :request do
       post user_path, params: { user: attributes_for(:user) }
       expect(response).to redirect_to(dashboard_path)
       expect(response).to have_http_status(302)
+    end
+    it "登録成功時、session[:user_id]に新規ユーザーのidがセットされること" do
+      post user_path, params: { user: attributes_for(:user) }
+      expect(session[:user_id]).to eq(User.last.id)
+    end
+    it "登録成功時、flashのnoticeメッセージが画面に表示されること" do
+      post user_path, params: { user: attributes_for(:user) }
+      follow_redirect!
+      expect(response.body).to include("ユーザー登録が完了しました")
     end
     it "登録失敗時、newへrender" do
       post user_path, params: { user: attributes_for(:user, :invalid_email) }

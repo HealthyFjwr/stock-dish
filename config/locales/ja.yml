@@ -11,12 +11,21 @@ ja:
   users:
     new:
       submit: 登録する
+    create:
+      success: ユーザー登録が完了しました
     edit:
       user_edit: ユーザーネーム編集
       submit: 変更
       cancel: キャンセル
+    update:
+      success: ユーザー情報を更新しました
   sessions:
     new:
       email: メールアドレス
       password: パスワード
       submit: ログイン
+    create:
+      success: ログインしました
+      failure: メールアドレスまたはパスワードが正しくありません
+    destroy:
+      success: ログアウトしました
