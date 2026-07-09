@@ -7,7 +7,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      redirect_to dashboard_path, notice: "User was successfully created."
+      session[:user_id] = @user.id
+      redirect_to dashboard_path, notice: t(".success")
     else
       flash.now[:alert] = @user.errors.full_messages.join(", ")
       render "new", status: :unprocessable_entity
@@ -21,7 +22,7 @@ class UsersController < ApplicationController
   def update
     @user = current_user
     if @user.update(update_user_params)
-      redirect_to dashboard_path, notice: "User was successfully updated."
+      redirect_to dashboard_path, notice: t(".success")
     else
       flash.now[:alert] = @user.errors.full_messages.join(", ")
       render "edit", status: :unprocessable_entity

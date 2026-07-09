@@ -6,15 +6,15 @@ class SessionsController < ApplicationController
     @user = User.find_by(email: params[:email])
     if @user && @user.authenticate(params[:password])
       session[:user_id] = @user.id
-      redirect_to dashboard_path, notice: "Successfully logged in"
+      redirect_to dashboard_path, notice: t(".success")
     else
-      flash.now[:alert] = "Email or Password is invalid"
+      flash.now[:alert] = t(".failure")
       render "new", status: :unauthorized
     end
   end
 
   def destroy
     session[:user_id] = nil
-    redirect_to root_path, notice: "Successfully logged out"
+    redirect_to root_path, notice: t(".success")
   end
 end

@@ -1,0 +1,8 @@
+<% flash.each do |type, message| %>
+  <% next if message.blank? %>
+  <div class="<%= flash_style(type) %> border-l-4 rounded-md px-4 py-3 mb-4 text-sm font-medium"
+       data-controller="flash"
+       data-flash-delay-value="4000">
+    <%= message %>
+  </div>
+<% end %>

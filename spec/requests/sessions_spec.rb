@@ -22,12 +22,23 @@ RSpec.describe "Sessions", type: :request do
         post login_path, params: { email: user.email, password: user.password }
         expect(session[:user_id]).to eq(user.id)
       end
+
+      it "flashのnoticeメッセージが画面に表示されること" do
+        post login_path, params: { email: user.email, password: user.password }
+        follow_redirect!
+        expect(response.body).to include("ログインしました")
+      end
     end
 
     context "passwordが間違っている場合" do
       it "401を返すこと" do
         post login_path, params: { email: user.email, password: "wrong_password" }
         expect(response).to have_http_status(401)
+      end
+
+      it "flashのalertメッセージが画面に表示されること" do
+        post login_path, params: { email: user.email, password: "wrong_password" }
+        expect(response.body).to include("メールアドレスまたはパスワードが正しくありません")
       end
     end
 
@@ -54,6 +65,12 @@ RSpec.describe "Sessions", type: :request do
     it "session[:user_id]がクリアされること" do
       delete logout_path
       expect(session[:user_id]).to be_nil
+    end
+
+    it "flashのnoticeメッセージが画面に表示されること" do
+      delete logout_path
+      follow_redirect!
+      expect(response.body).to include("ログアウトしました")
     end
   end
 end
