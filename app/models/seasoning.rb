@@ -1,10 +1,25 @@
 class Seasoning < ApplicationRecord
+  # category enum
+  enum :category, {
+    basic: 0,
+    fermented: 1,
+    oil: 2,
+    sauce: 3,
+    dressing: 4,
+    stock: 5,
+    spice: 6,
+    paste: 7,
+    sweetener: 8,
+    other: 9
+  }
+
+  # validations
   validates :name, presence: true, uniqueness: true
   validates :category, presence: true
   validates :min_expiry_days, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   validates :max_expiry_days, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
 
-  #custom validation
+  # custom validations
   validate :expiry_days_range
 
   private
