@@ -7,3 +7,17 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+require "csv"
+
+CSV.foreach(Rails.root.join("db/seeds/seasonings.csv"), headers: true) do |row|
+  # use row here...
+  Seasoning.find_or_create_by!(name: row["name"]) do |seasoning|
+    seasoning.category = row["category"]
+    seasoning.min_expiry_days = row["min_expiry_days"]
+    seasoning.max_expiry_days = row["max_expiry_days"]
+    puts "#{seasoning.name}を追加"
+  end
+end
+
+puts "seasonings.csv の登録が正常に完了"
