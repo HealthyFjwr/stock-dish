@@ -22,6 +22,10 @@ class Seasoning < ApplicationRecord
   # custom validations
   validate :expiry_days_range
 
+  # relation table
+  has_many :user_seasonings
+  has_many :users, through: :user_seasonings
+
   private
   def expiry_days_range
     if min_expiry_days.present? && max_expiry_days.present? && min_expiry_days > max_expiry_days
