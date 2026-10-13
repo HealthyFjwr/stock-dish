@@ -1,11 +1,10 @@
-<% content_for :title, "調味料を追加 | StockDish" %>
+<% content_for :title, "調味料を追加" %>
 <% categories = Seasoning.categories.keys %>
-<% sample_selected_names = ["醤油", "料理酒", "酢", "ごま油", "オリーブオイル"] %>
-<% sample_registered_names = ["塩", "味噌", "バター"] %>
+
 
 <div class="mx-auto max-w-6xl space-y-7 pb-28">
   <section class="space-y-3">
-    <%= link_to "#", class: "inline-flex items-center gap-2 text-sm font-semibold text-[#527b61] transition hover:text-[#285b46]" do %>
+    <%= link_to user_seasonings_path, class: "inline-flex items-center gap-2 text-sm font-semibold text-[#527b61] transition hover:text-[#285b46]" do %>
       <span aria-hidden="true">←</span> 所持調味料に戻る
     <% end %>
     <div>
@@ -16,19 +15,10 @@
   </section>
 
   <section class="rounded-2xl border border-[#e7e9e1] bg-white p-4 shadow-[0_2px_12px_rgba(40,91,70,0.03)] sm:p-5">
-    <%= form_with url: seasonings_path, method: :get, class: "flex flex-col gap-3 sm:flex-row" do |f| %>
-      <label for="seasoning-search" class="sr-only">調味料名で検索</label>
-      <div class="relative min-w-0 flex-1">
-        <span class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-lg text-[#8a968d]" aria-hidden="true">⌕</span>
-        <%= f.search_field :q, id: "seasoning-search", value: @query, placeholder: "調味料名で検索（醤油、ごま油など）", class: "w-full rounded-xl border border-[#dce2d8] bg-[#fcfdfb] py-3 pl-10 pr-4 text-sm text-[#34463b] outline-none placeholder:text-[#a0aaa1] focus:border-[#6e9678] focus:ring-2 focus:ring-[#285b46]/10" %>
-      </div>
-      <%= f.submit "検索", class: "rounded-xl bg-[#285b46] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#1f4938]" %>
-    <% end %>
-
-    <nav aria-label="調味料のカテゴリ" class="mt-4 flex gap-2 overflow-x-auto pb-1 lg:flex-wrap">
-      <%= link_to "すべて", seasonings_path(q: @query.presence), class: "shrink-0 rounded-full px-4 py-2 text-xs font-bold transition #{@selected_category.nil? ? 'bg-[#285b46] text-white' : 'bg-[#f3f5ef] text-[#718078] hover:bg-[#eaf0e2] hover:text-[#285b46]'}" %>
+    <nav aria-label="調味料のカテゴリ" class="flex gap-2 overflow-x-auto pb-1 lg:flex-wrap">
+      <%= link_to "すべて", seasonings_path, class: "shrink-0 rounded-full px-4 py-2 text-xs font-bold transition #{@selected_category.nil? ? 'bg-[#285b46] text-white' : 'bg-[#f3f5ef] text-[#718078] hover:bg-[#eaf0e2] hover:text-[#285b46]'}" %>
       <% categories.each do |category| %>
-        <%= link_to seasoning_category_label(category), seasonings_path(q: @query.presence, category: category), class: "shrink-0 rounded-full px-4 py-2 text-xs font-bold transition #{@selected_category == category ? 'bg-[#285b46] text-white' : 'bg-[#f3f5ef] text-[#718078] hover:bg-[#eaf0e2] hover:text-[#285b46]'}" %>
+        <%= link_to seasoning_category_label(category), seasonings_path(category: category), class: "shrink-0 rounded-full px-4 py-2 text-xs font-bold transition #{@selected_category == category ? 'bg-[#285b46] text-white' : 'bg-[#f3f5ef] text-[#718078] hover:bg-[#eaf0e2] hover:text-[#285b46]'}" %>
       <% end %>
     </nav>
   </section>
@@ -40,45 +30,49 @@
     </div>
 
     <% if @seasonings.any? %>
-      <div class="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-        <% @seasonings.each do |seasoning| %>
-          <% registered = sample_registered_names.include?(seasoning.name) %>
-          <% selected = sample_selected_names.include?(seasoning.name) %>
-          <label class="flex min-h-20 items-center gap-3 rounded-2xl border p-4 transition <%= registered ? 'cursor-not-allowed border-[#e7e9e1] bg-[#f8f9f6] opacity-70' : selected ? 'cursor-pointer border-[#8eaa81] bg-[#f4f8ed] shadow-sm' : 'cursor-pointer border-[#e7e9e1] bg-white hover:border-[#cfddc3] hover:shadow-[0_4px_16px_rgba(40,91,70,0.06)]' %>">
-            <% unless registered %>
-              <%= check_box_tag "seasoning_ids[]", seasoning.id, selected, class: "h-5 w-5 shrink-0 rounded border-[#bdc9b8] text-[#285b46] focus:ring-[#285b46]/20" %>
-            <% else %>
-              <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#dfedb9] text-xs font-bold text-[#285b46]" aria-hidden="true">✓</span>
-            <% end %>
-            <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#eff4e5] text-lg text-[#285b46]" aria-hidden="true">▤</span>
-            <span class="min-w-0 flex-1">
-              <span class="block truncate text-sm font-bold text-[#34463b]"><%= seasoning.name %></span>
-              <span class="mt-1 block text-xs text-[#8a968d]"><%= seasoning_category_label(seasoning.category) %></span>
-            </span>
-            <% if registered %>
-              <span class="shrink-0 rounded-full bg-[#edf0e9] px-2.5 py-1 text-[10px] font-semibold text-[#718078]">登録済み</span>
-            <% elsif selected %>
-              <span class="shrink-0 rounded-full bg-[#dfedb9] px-2.5 py-1 text-[10px] font-semibold text-[#285b46]">選択中</span>
-            <% end %>
-          </label>
-        <% end %>
-      </div>
+      <%= form_with url: user_seasonings_path, method: :post, data: { controller: "seasoning-select" } do |f| %>
+        <div class="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+          <% @seasonings.each do |seasoning| %>
+            <% registered = @registered_seasoning_ids.include?(seasoning.id) %>
+            <label class="flex min-h-20 items-center gap-3 rounded-2xl border p-4 transition <%= registered ? 'cursor-not-allowed border-[#e7e9e1] bg-[#f8f9f6] opacity-70' : 'cursor-pointer border-[#e7e9e1] bg-white hover:border-[#cfddc3] hover:shadow-[0_4px_16px_rgba(40,91,70,0.06)] has-[:checked]:border-[#8eaa81] has-[:checked]:bg-[#f4f8ed] has-[:checked]:shadow-sm' %>">
+              <% if registered %>
+                <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#dfedb9] text-xs font-bold text-[#285b46]" aria-hidden="true">✓</span>
+              <% else %>
+                <%= check_box_tag "seasoning_ids[]", seasoning.id, false, id: "seasoning_#{seasoning.id}", data: { seasoning_select_target: "checkbox", action: "seasoning-select#update" }, class: "h-5 w-5 shrink-0 rounded border-[#bdc9b8] text-[#285b46] focus:ring-[#285b46]/20" %>
+              <% end %>
+              <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#eff4e5] text-lg text-[#285b46]" aria-hidden="true">▤</span>
+              <span class="min-w-0 flex-1">
+                <span class="block truncate text-sm font-bold text-[#34463b]"><%= seasoning.name %></span>
+                <span class="mt-1 block text-xs text-[#8a968d]"><%= seasoning_category_label(seasoning.category) %></span>
+                <% if (expiry_label = seasoning_expiry_label(seasoning)) %>
+                  <span class="mt-1 block text-xs text-[#8a968d]"><%= expiry_label %></span>
+                <% end %>
+              </span>
+              <% if registered %>
+                <span class="shrink-0 rounded-full bg-[#edf0e9] px-2.5 py-1 text-[10px] font-semibold text-[#718078]">登録済み</span>
+              <% end %>
+            </label>
+          <% end %>
+        </div>
 
-      <div class="sticky bottom-3 z-10 mt-6 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#e7e9e1] bg-white/95 p-4 shadow-[0_8px_28px_rgba(40,91,70,0.12)] backdrop-blur sm:px-5">
-        <div>
-          <p class="text-sm font-bold text-[#34463b]">5件選択中</p>
-          <p class="mt-0.5 text-xs text-[#8a968d]">検索・カテゴリ変更後も選択を保持</p>
+        <div class="sticky bottom-3 z-10 mt-6 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#e7e9e1] bg-white/95 p-4 shadow-[0_8px_28px_rgba(40,91,70,0.12)] backdrop-blur sm:px-5">
+          <div>
+            <p class="text-sm font-bold text-[#34463b]"><span data-seasoning-select-target="count">0</span>件選択中</p>
+            <p class="mt-0.5 text-xs text-[#8a968d]">登録する調味料を選択してください</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <button type="button" data-action="seasoning-select#clear" class="text-xs font-semibold text-[#718078] transition hover:text-[#285b46]">選択を解除</button>
+            <%= f.button type: "submit", disabled: true, data: { seasoning_select_target: "submit" }, class: "rounded-xl bg-[#285b46] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#1f4938] disabled:cursor-not-allowed disabled:opacity-50" do %>
+              選択した<span data-seasoning-select-target="count">0</span>件を登録
+            <% end %>
+          </div>
         </div>
-        <div class="flex items-center gap-3">
-          <button type="button" class="text-xs font-semibold text-[#718078] transition hover:text-[#285b46]">選択を解除</button>
-          <button type="button" class="rounded-xl bg-[#285b46] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#1f4938]">選択した5件を登録</button>
-        </div>
-      </div>
+      <% end %>
     <% else %>
       <div class="rounded-2xl border border-dashed border-[#cfd9ca] bg-white px-6 py-14 text-center">
-        <span class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#eff4e5] text-2xl text-[#527b61]" aria-hidden="true">⌕</span>
+        <span class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#eff4e5] text-2xl text-[#527b61]" aria-hidden="true">▤</span>
         <h3 class="mt-4 font-bold text-[#34463b]">該当する調味料がありません</h3>
-        <p class="mt-2 text-sm text-[#8a968d]">検索語やカテゴリを変えて、もう一度お試しください。</p>
+        <p class="mt-2 text-sm text-[#8a968d]">カテゴリを変えて、もう一度お試しください。</p>
         <%= link_to "すべての調味料", seasonings_path, class: "mt-5 inline-flex rounded-xl bg-[#285b46] px-5 py-2.5 text-sm font-bold text-white hover:bg-[#1f4938]" %>
       </div>
     <% end %>

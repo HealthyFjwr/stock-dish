@@ -11,5 +11,20 @@ require 'rails_helper'
 #   end
 # end
 RSpec.describe SeasoningsHelper, type: :helper do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "#seasoning_expiry_label" do
+    it "最小値と最大値が異なる場合は範囲で返すこと" do
+      seasoning = build(:seasoning, min_expiry_days: 30, max_expiry_days: 60)
+      expect(helper.seasoning_expiry_label(seasoning)).to eq("開封後 30〜60日")
+    end
+
+    it "最小値と最大値が同じ場合は1つの値で返すこと" do
+      seasoning = build(:seasoning, min_expiry_days: 180, max_expiry_days: 180)
+      expect(helper.seasoning_expiry_label(seasoning)).to eq("開封後 180日")
+    end
+
+    it "未設定の場合はnilを返すこと" do
+      seasoning = build(:seasoning, min_expiry_days: nil, max_expiry_days: nil)
+      expect(helper.seasoning_expiry_label(seasoning)).to be_nil
+    end
+  end
 end
