@@ -1,5 +1,4 @@
 <% content_for :title, "調味料を追加" %>
-<% categories = Seasoning.categories.keys %>
 
 
 <div class="mx-auto max-w-6xl space-y-7 pb-28">
@@ -17,7 +16,7 @@
   <section class="rounded-2xl border border-[#e7e9e1] bg-white p-4 shadow-[0_2px_12px_rgba(40,91,70,0.03)] sm:p-5">
     <nav aria-label="調味料のカテゴリ" class="flex gap-2 overflow-x-auto pb-1 lg:flex-wrap">
       <%= link_to "すべて", seasonings_path, class: "shrink-0 rounded-full px-4 py-2 text-xs font-bold transition #{@selected_category.nil? ? 'bg-[#285b46] text-white' : 'bg-[#f3f5ef] text-[#718078] hover:bg-[#eaf0e2] hover:text-[#285b46]'}" %>
-      <% categories.each do |category| %>
+      <% @categories.each do |category| %>
         <%= link_to seasoning_category_label(category), seasonings_path(category: category), class: "shrink-0 rounded-full px-4 py-2 text-xs font-bold transition #{@selected_category == category ? 'bg-[#285b46] text-white' : 'bg-[#f3f5ef] text-[#718078] hover:bg-[#eaf0e2] hover:text-[#285b46]'}" %>
       <% end %>
     </nav>
