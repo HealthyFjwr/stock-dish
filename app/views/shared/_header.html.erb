@@ -1,16 +1,13 @@
-<header class="flex items-center justify-between px-6 h-16 bg-white border-b border-gray-200 relative">
-  <div class="font-bold text-green-700 text-lg">
-    StockDish
-  </div>
-
-  <div class="relative" data-controller="dropdown">
-    <button data-action="click->dropdown#toggle" class="w-9 h-9 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 font-semibold">
+<header class="flex h-16 shrink-0 items-center justify-between border-b border-[#e8ebe3] bg-white px-5 sm:px-8">
+  <p class="text-xs font-medium text-[#93a096] md:hidden">食材を、ひと皿につなぐ。</p>
+  <div class="ml-auto relative" data-controller="dropdown">
+    <button type="button" data-action="click->dropdown#toggle" aria-label="アカウントメニュー" class="flex h-10 w-10 items-center justify-center rounded-full bg-[#dfedb9] text-sm font-bold text-[#285b46] transition hover:bg-[#d4e5a6]">
       <%= current_user.username.first.upcase %>
     </button>
 
-    <div data-dropdown-target="menu" class="hidden absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-md shadow-md z-10">
-      <%= link_to "設定", edit_user_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" %>
-      <%= link_to "ログアウト", logout_path, data: { turbo_method: :delete }, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" %>
+    <div data-dropdown-target="menu" class="absolute right-0 z-20 mt-2 hidden w-44 overflow-hidden rounded-xl border border-[#e8ebe3] bg-white py-1 shadow-lg">
+      <%= link_to "設定", edit_user_path, class: "block px-4 py-2.5 text-sm text-[#526258] transition hover:bg-[#f5f7f1]" %>
+      <%= link_to "ログアウト", logout_path, data: { turbo_method: :delete }, class: "block px-4 py-2.5 text-sm text-[#526258] transition hover:bg-[#f5f7f1]" %>
     </div>
   </div>
 </header>

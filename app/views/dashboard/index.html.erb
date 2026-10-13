@@ -1,4 +1,97 @@
-<div>
-  <h1 class="font-bold text-4xl">Dashboard#index</h1>
-  <p>Find me in app/views/dashboard/index.html.erb</p>
+<% content_for :title, "マイキッチン | StockDish" %>
+
+<div class="mx-auto max-w-6xl space-y-8 pb-10">
+  <section class="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+    <div>
+      <p class="mb-2 text-xs font-bold tracking-[0.2em] text-[#718078]">STOCKDISH <span class="mx-1 text-[#c0c9bf]">/</span> MY KITCHEN</p>
+      <h1 class="text-3xl font-bold tracking-tight text-[#285b46] sm:text-4xl">マイキッチン</h1>
+      <p class="mt-3 text-sm leading-6 text-[#718078]">今日も、あるものでおいしく。<br class="sm:hidden">冷蔵庫をチェックして、今夜の献立を決めましょう。</p>
+    </div>
+    <%= link_to "#", class: "inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-[#285b46] px-5 text-sm font-bold text-white shadow-sm transition hover:bg-[#1f4938] focus:outline-none focus:ring-2 focus:ring-[#285b46] focus:ring-offset-2" do %>
+      <span class="text-xl leading-none" aria-hidden="true">＋</span>
+      食材を追加
+    <% end %>
+  </section>
+
+  <section class="relative overflow-hidden rounded-3xl bg-[#285b46] px-6 py-8 text-white shadow-sm sm:px-10 sm:py-9">
+    <div class="absolute -right-12 -top-24 h-64 w-64 rounded-full border border-white/10"></div>
+    <div class="absolute -right-1 -top-14 h-44 w-44 rounded-full border border-white/10"></div>
+    <div class="relative max-w-2xl">
+      <p class="text-[11px] font-bold tracking-[0.22em] text-[#d9e9bf]">YOUR DAILY DISH</p>
+      <h2 class="mt-3 text-2xl font-bold leading-snug sm:text-3xl">その食材で、何つくろう？</h2>
+      <p class="mt-2 text-sm leading-6 text-white/75">使い切りたい食材から、あなたに合うレシピを。</p>
+      <%= link_to "#", class: "mt-6 inline-flex items-center gap-2 rounded-full bg-[#dfedb9] px-5 py-3 text-sm font-bold text-[#285b46] transition hover:bg-white" do %>
+        レシピを提案してもらう <span aria-hidden="true">→</span>
+      <% end %>
+    </div>
+    <div class="absolute bottom-5 right-8 hidden text-7xl opacity-20 sm:block" aria-hidden="true">✧</div>
+  </section>
+
+  <section class="grid gap-4 sm:grid-cols-3" aria-label="食材の状況">
+    <article class="rounded-2xl border border-[#e7e9e1] bg-white p-5 shadow-[0_2px_12px_rgba(40,91,70,0.03)]">
+      <div class="flex items-center justify-between">
+        <p class="text-sm font-semibold text-[#718078]">食材のストック</p>
+        <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-[#eff4e5] text-lg text-[#285b46]" aria-hidden="true">◫</span>
+      </div>
+      <p class="mt-3 text-3xl font-bold tracking-tight text-[#285b46]">12 <span class="text-sm font-medium text-[#718078]">種類</span></p>
+    </article>
+    <article class="rounded-2xl border border-[#e7e9e1] bg-white p-5 shadow-[0_2px_12px_rgba(40,91,70,0.03)]">
+      <div class="flex items-center justify-between">
+        <p class="text-sm font-semibold text-[#718078]">そろっている調味料</p>
+        <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-[#eff4e5] text-lg text-[#285b46]" aria-hidden="true">▤</span>
+      </div>
+      <p class="mt-3 text-3xl font-bold tracking-tight text-[#285b46]">8 <span class="text-sm font-medium text-[#718078]">種類</span></p>
+    </article>
+    <article class="rounded-2xl border border-[#e7e9e1] bg-white p-5 shadow-[0_2px_12px_rgba(40,91,70,0.03)]">
+      <div class="flex items-center justify-between">
+        <p class="text-sm font-semibold text-[#718078]">期限が近い食材</p>
+        <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-[#fbf0e2] text-lg text-[#aa7135]" aria-hidden="true">⌛</span>
+      </div>
+      <p class="mt-3 text-3xl font-bold tracking-tight text-[#285b46]">3 <span class="text-sm font-medium text-[#718078]">種類</span></p>
+    </article>
+  </section>
+
+  <section class="grid gap-5 lg:grid-cols-[1.15fr_0.85fr]">
+    <article class="rounded-2xl border border-[#e7e9e1] bg-white p-5 sm:p-6">
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          <p class="text-xs font-bold tracking-[0.16em] text-[#93a096]">USE SOON</p>
+          <h2 class="mt-1 text-lg font-bold text-[#285b46]">早めに使いたい食材</h2>
+        </div>
+        <%= link_to "食材一覧 →", "#", class: "shrink-0 pt-1 text-xs font-bold text-[#527b61] hover:text-[#285b46]" %>
+      </div>
+      <ul class="mt-5 divide-y divide-[#eef0e9]">
+        <% [["01", "鮭", "冷蔵 / 2切れ", "今日まで", "today"], ["02", "ほうれん草", "冷蔵 / 1束", "あと1日", "soon"], ["03", "卵", "冷蔵 / 4個", "あと3日", "later"]].each do |number, name, detail, expiry, urgency| %>
+          <li class="flex items-center gap-3 py-3.5 first:pt-0 last:pb-0 sm:gap-4">
+            <span class="w-7 text-xs font-bold text-[#a3ada4]"><%= number %></span>
+            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl <%= urgency == "today" ? "bg-[#fbf0e2]" : "bg-[#eff4e5]" %> text-lg" aria-hidden="true"><%= { "鮭" => "🐟", "ほうれん草" => "🥬", "卵" => "🥚" }.fetch(name) %></span>
+            <div class="min-w-0 flex-1">
+              <p class="truncate text-sm font-bold text-[#34463b]"><%= name %></p>
+              <p class="mt-0.5 text-xs text-[#8a968d]"><%= detail %></p>
+            </div>
+            <span class="rounded-full px-2.5 py-1 text-[11px] font-bold <%= urgency == "today" ? "bg-[#fbf0e2] text-[#a96828]" : "bg-[#f3f5ef] text-[#718078]" %>"><%= expiry %></span>
+          </li>
+        <% end %>
+      </ul>
+    </article>
+
+    <article class="flex flex-col overflow-hidden rounded-2xl border border-[#e7e9e1] bg-white">
+      <div class="flex items-center gap-3 px-5 pt-5 sm:px-6 sm:pt-6">
+        <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-[#eff4e5] text-lg text-[#285b46]" aria-hidden="true">✧</span>
+        <div>
+          <p class="text-xs font-bold tracking-[0.12em] text-[#93a096]">COOK WITH YOUR STOCK</p>
+          <h2 class="mt-0.5 text-base font-bold text-[#285b46]">今ある食材で、もう一品</h2>
+        </div>
+      </div>
+      <div class="mx-5 mt-4 flex min-h-28 items-center justify-center rounded-xl bg-[#f2f5eb] text-5xl sm:mx-6" aria-hidden="true">🥗</div>
+      <div class="flex flex-1 flex-col px-5 pb-5 pt-4 sm:px-6 sm:pb-6">
+        <p class="text-xs font-semibold text-[#8a968d]">ストック食材で作れる</p>
+        <h3 class="mt-1 text-lg font-bold leading-snug text-[#34463b]">彩り野菜と卵の<br>あたたかいサラダ</h3>
+        <p class="mt-2 text-xs text-[#8a968d]">15分 <span class="mx-1">·</span> 2人分</p>
+        <%= link_to "レシピを見る →", "#", class: "mt-4 text-sm font-bold text-[#527b61] hover:text-[#285b46]" %>
+      </div>
+    </article>
+  </section>
+
+  <p class="text-center text-[11px] text-[#a0aaa1]">※ 食材・数量・レシピはデザイン確認用のサンプルです。</p>
 </div>

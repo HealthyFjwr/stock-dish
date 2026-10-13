@@ -10,9 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_04_013027) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_09_152225) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "seasonings", force: :cascade do |t|
+    t.integer "category", null: false
+    t.datetime "created_at", null: false
+    t.integer "max_expiry_days"
+    t.integer "min_expiry_days"
+    t.string "name", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_seasonings_on_name", unique: true
+  end
+
+  create_table "user_seasonings", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.date "expiry_date"
+    t.bigint "seasoning_id", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["seasoning_id"], name: "index_user_seasonings_on_seasoning_id"
+    t.index ["user_id", "seasoning_id"], name: "index_user_seasonings_on_user_id_and_seasoning_id", unique: true
+    t.index ["user_id"], name: "index_user_seasonings_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -24,4 +45,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_04_013027) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true
   end
+
+  add_foreign_key "user_seasonings", "seasonings"
+  add_foreign_key "user_seasonings", "users"
 end

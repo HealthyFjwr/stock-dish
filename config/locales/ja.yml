@@ -29,3 +29,7 @@ ja:
       failure: メールアドレスまたはパスワードが正しくありません
     destroy:
       success: ログアウトしました
+  user_seasonings:
+    create:
+      success: "%{count}件の調味料を登録しました"
+      blank: 調味料を選択してください

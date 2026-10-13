@@ -4,10 +4,23 @@
     <%= render "layouts/shared/head" %>
   </head>
 
-  <body>
-    <main class="<%= yield(:main_class) || "container mx-auto mt-28 px-5 flex" %>">
-      <%= render "shared/flash" %>
-      <%= yield %>
-    </main>
+  <body class="min-h-screen bg-[#f6f7f2] antialiased">
+    <% if current_user %>
+      <div class="min-h-screen md:flex">
+        <%= render "shared/sidebar" %>
+        <div class="min-w-0 flex-1">
+          <%= render "shared/header" %>
+          <main class="px-5 py-7 sm:px-8 sm:py-9">
+            <%= render "shared/flash" %>
+            <%= yield %>
+          </main>
+        </div>
+      </div>
+    <% else %>
+      <main class="mx-auto max-w-6xl px-5 py-8">
+          <%= render "shared/flash" %>
+          <%= yield %>
+      </main>
+    <% end %>
   </body>
 </html>

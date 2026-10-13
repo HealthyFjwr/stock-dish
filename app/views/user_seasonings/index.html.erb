@@ -1,0 +1,56 @@
+<% content_for :title, "登録調味料一覧" %>
+
+<div class="mx-auto max-w-6xl space-y-7 pb-10">
+  <section class="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+    <div>
+      <p class="text-xs font-bold tracking-[0.2em] text-[#718078]">MY KITCHEN <span class="mx-1 text-[#c0c9bf]">/</span> SEASONINGS</p>
+      <h1 class="mt-2 text-3xl font-bold tracking-tight text-[#285b46]">調味料一覧</h1>
+      <p class="mt-2 text-sm text-[#718078]">登録した調味料を確認・管理できます。</p>
+    </div>
+    <%= link_to seasonings_path, class: "inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#285b46] px-5 text-sm font-bold text-white transition hover:bg-[#1f4938]" do %>
+      <span class="text-lg leading-none" aria-hidden="true">＋</span> 調味料を追加
+    <% end %>
+  </section>
+
+  <section class="rounded-2xl border border-[#e7e9e1] bg-white p-4 shadow-[0_2px_12px_rgba(40,91,70,0.03)] sm:p-5">
+    <nav aria-label="登録済み調味料のカテゴリ" class="mt-4 flex gap-2 overflow-x-auto pb-1 lg:flex-wrap">
+      <%= link_to "すべて", user_seasonings_path, class: "shrink-0 rounded-full px-4 py-2 text-xs font-bold transition #{@selected_category.nil? ? 'bg-[#285b46] text-white' : 'bg-[#f3f5ef] text-[#718078] hover:bg-[#eaf0e2] hover:text-[#285b46]'}" %>
+      <% @categories.each do |category| %>
+        <%= link_to seasoning_category_label(category), user_seasonings_path(category: category), class: "shrink-0 rounded-full px-4 py-2 text-xs font-bold transition #{@selected_category == category ? 'bg-[#285b46] text-white' : 'bg-[#f3f5ef] text-[#718078] hover:bg-[#eaf0e2] hover:text-[#285b46]'}" %>
+      <% end %>
+    </nav>
+  </section>
+
+  <section>
+    <div class="mb-4 flex items-end justify-between gap-3">
+      <h2 class="text-lg font-bold text-[#34463b]">所持している調味料 <span class="ml-1 text-sm font-medium text-[#8a968d]">· <%= @user_seasonings.size %>件</span></h2>
+      <% if @selected_category %><span class="rounded-full bg-[#dfedb9] px-3 py-1 text-xs font-bold text-[#285b46]"><%= seasoning_category_label(@selected_category) %></span><% end %>
+    </div>
+
+    <% if @user_seasonings.any? %>
+      <div class="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+        <% @user_seasonings.each do |user_seasoning| %>
+          <% seasoning = user_seasoning.seasoning %>
+          <article class="flex min-h-24 items-center gap-4 rounded-2xl border border-[#e7e9e1] bg-white p-4 transition hover:border-[#cfddc3] hover:shadow-[0_4px_16px_rgba(40,91,70,0.06)]">
+            <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#eff4e5] text-xl text-[#285b46]" aria-hidden="true">▤</span>
+            <div class="min-w-0 flex-1">
+              <h3 class="truncate font-bold text-[#34463b]"><%= seasoning.name %></h3>
+              <p class="mt-1 text-xs text-[#8a968d]"><%= seasoning_category_label(seasoning.category) %></p>
+              <% if (expiry_label = seasoning_expiry_label(seasoning)) %>
+                <p class="mt-1 text-xs text-[#8a968d]"><%= expiry_label %></p>
+              <% end %>
+            </div>
+            <button type="button" class="shrink-0 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-[#8a968d] transition hover:bg-[#fbf0e2] hover:text-[#a96828]">削除</button>
+          </article>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="rounded-2xl border border-dashed border-[#cfd9ca] bg-white px-6 py-14 text-center">
+        <span class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#eff4e5] text-2xl text-[#527b61]" aria-hidden="true">▤</span>
+        <h3 class="mt-4 font-bold text-[#34463b]"><%= @selected_category ? "該当する調味料がありません" : "調味料がまだ登録されていません" %></h3>
+        <p class="mt-2 text-sm text-[#8a968d]">調味料を追加して、いつものストックを管理しましょう。</p>
+        <%= link_to "調味料を追加", seasonings_path, class: "mt-5 inline-flex rounded-xl bg-[#285b46] px-5 py-2.5 text-sm font-bold text-white transition hover:bg-[#1f4938]" %>
+      </div>
+    <% end %>
+  </section>
+</div>

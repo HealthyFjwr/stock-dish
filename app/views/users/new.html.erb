@@ -1,30 +1,45 @@
-<div class="min-h-screen flex items-center justify-center bg-linear-to-br from-green-50 to-white px-4">
-  <div class="w-full max-w-md bg-white rounded-2xl shadow-sm border border-gray-300 p-8">
-    <div class="font-bold text-xl text-green-700 text-center mb-4">Stock<span class="text-green-500">Dish</span></div>
-    <div class="text-center text-xs font-bold uppercase tracking-widest text-green-700 mb-6">Sign Up</div>
+<% content_for :title, "新規登録 | StockDish" %>
 
-    <%= form_with model: @user, url: user_path do |f| %>
-      <div class="mb-4">
-        <%= f.label :username, class: "block text-sm font-medium text-gray-700 mb-1" %>
-        <%= f.text_field :username, class: "w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" %>
+<div class="mx-auto grid min-h-[calc(100vh-8rem)] max-w-4xl items-center gap-8 py-6 md:grid-cols-2 md:gap-12">
+  <section class="relative overflow-hidden rounded-3xl bg-[#285b46] px-7 py-9 text-white sm:px-9 md:py-12">
+    <%= link_to root_path, class: "text-2xl font-bold tracking-tight" do %>Stock<span class="text-[#dfedb9]">Dish</span><% end %>
+    <div class="mt-8 max-w-sm">
+      <p class="text-xs font-bold tracking-[0.2em] text-[#d9e9bf]">GET STARTED</p>
+      <h1 class="mt-3 text-2xl font-bold leading-snug sm:text-3xl">冷蔵庫の中身が、<br>今夜の献立になる。</h1>
+      <p class="mt-3 text-sm leading-6 text-white/75">食材を登録して、今日作れるレシピを見つけましょう。</p>
+    </div>
+    <div class="mt-8 flex flex-wrap gap-2 text-sm font-medium">
+      <span class="rounded-full bg-white/15 px-3 py-1.5">食材を管理</span><span class="rounded-full bg-white/15 px-3 py-1.5">期限をチェック</span><span class="rounded-full bg-white/15 px-3 py-1.5">献立を提案</span>
+    </div>
+    <div class="absolute -bottom-8 -right-4 flex h-32 w-32 items-center justify-center rounded-full bg-white/10 text-6xl" aria-hidden="true">🥗</div>
+  </section>
+
+  <section class="rounded-3xl border border-[#e7e9e1] bg-white p-6 shadow-[0_6px_28px_rgba(40,91,70,0.06)] sm:p-8">
+    <p class="text-xs font-bold tracking-[0.2em] text-[#718078]">SIGN UP</p>
+    <h2 class="mt-2 text-2xl font-bold text-[#285b46]">アカウント登録</h2>
+    <p class="mt-2 text-sm text-[#718078]">必要な情報を入力してください。</p>
+
+    <%= form_with model: @user, url: user_path, class: "mt-6 space-y-4" do |f| %>
+      <div>
+        <%= f.label :username, class: "mb-1.5 block text-sm font-semibold text-[#526258]" %>
+        <%= f.text_field :username, autocomplete: "username", required: true, class: "w-full rounded-xl border border-[#dce2d8] bg-[#fcfdfb] px-4 py-3 text-sm text-[#34463b] outline-none transition focus:border-[#6e9678] focus:ring-2 focus:ring-[#285b46]/10" %>
       </div>
-
-      <div class="mb-4">
-        <%= f.label :email, class: "block text-sm font-medium text-gray-700 mb-1" %>
-        <%= f.email_field :email, class: "w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" %>
+      <div>
+        <%= f.label :email, class: "mb-1.5 block text-sm font-semibold text-[#526258]" %>
+        <%= f.email_field :email, autocomplete: "email", required: true, class: "w-full rounded-xl border border-[#dce2d8] bg-[#fcfdfb] px-4 py-3 text-sm text-[#34463b] outline-none transition focus:border-[#6e9678] focus:ring-2 focus:ring-[#285b46]/10" %>
       </div>
-
-      <div class="mb-4">
-        <%= f.label :password, class: "block text-sm font-medium text-gray-700 mb-1" %>
-        <%= f.password_field :password, class: "w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" %>
+      <div>
+        <%= f.label :password, class: "mb-1.5 block text-sm font-semibold text-[#526258]" %>
+        <%= f.password_field :password, autocomplete: "new-password", required: true, class: "w-full rounded-xl border border-[#dce2d8] bg-[#fcfdfb] px-4 py-3 text-sm text-[#34463b] outline-none transition focus:border-[#6e9678] focus:ring-2 focus:ring-[#285b46]/10" %>
       </div>
-
-      <div class="mb-6">
-        <%= f.label :password_confirmation, class: "block text-sm font-medium text-gray-700 mb-1" %>
-        <%= f.password_field :password_confirmation, class: "w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" %>
+      <div>
+        <%= f.label :password_confirmation, class: "mb-1.5 block text-sm font-semibold text-[#526258]" %>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", required: true, class: "w-full rounded-xl border border-[#dce2d8] bg-[#fcfdfb] px-4 py-3 text-sm text-[#34463b] outline-none transition focus:border-[#6e9678] focus:ring-2 focus:ring-[#285b46]/10" %>
       </div>
-
-      <%= f.submit t(".submit"), class: "w-full bg-green-700 text-white rounded-lg py-3 font-bold hover:bg-green-900 transition" %>
+      <%= f.submit t(".submit"), class: "w-full rounded-xl bg-[#285b46] px-5 py-3.5 text-sm font-bold text-white transition hover:bg-[#1f4938] focus:outline-none focus:ring-2 focus:ring-[#285b46] focus:ring-offset-2" %>
     <% end %>
-  </div>
+
+    <p class="mt-5 text-center text-sm text-[#718078]">すでに登録済みの方は <%= link_to "ログイン", login_path, class: "font-bold text-[#285b46] underline decoration-[#b6c9ad] underline-offset-4 hover:text-[#1f4938]" %></p>
+    <%= link_to "トップページへ戻る", root_path, class: "mt-4 block text-center text-xs font-medium text-[#8a968d] hover:text-[#285b46]" %>
+  </section>
 </div>

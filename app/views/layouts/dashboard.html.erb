@@ -1,16 +1,19 @@
-<html>
+<!DOCTYPE html>
+<html lang="ja">
   <head>
     <%= render "layouts/shared/head" %>
   </head>
 
-  <body>
-    <%= render "shared/header" %>
-    <div class="flex">
+  <body class="min-h-screen bg-[#f6f7f2] antialiased">
+    <div class="min-h-screen md:flex">
       <%= render "shared/sidebar" %>
-      <main class="flex-1 p-6">
-        <%= render "shared/flash" %>
-        <%= yield %>
-      </main>
+      <div class="min-w-0 flex-1">
+        <%= render "shared/header" %>
+        <main class="px-5 py-7 sm:px-8 sm:py-9">
+          <%= render "shared/flash" %>
+          <%= yield %>
+        </main>
+      </div>
     </div>
   </body>
 </html>
