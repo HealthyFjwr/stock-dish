@@ -18,4 +18,14 @@ class UserSeasoningsController < ApplicationController
       redirect_to user_seasonings_path, notice: t(".success", count: seasonings.size)
     end
   end
+
+  def destroy
+    user_seasoning = current_user.user_seasonings.find_by(id: params[:id])
+    if user_seasoning
+      user_seasoning.destroy
+      redirect_to user_seasonings_path, notice: t(".success")
+    else
+      redirect_to user_seasonings_path, alert: t(".not_found")
+    end
+  end
 end
